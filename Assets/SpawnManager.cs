@@ -38,7 +38,7 @@ public class SpawnManager : MonoBehaviour
             while (true)
             {
                 yield return new WaitForSeconds(3.0f);
-                   if (_spawnCount < _maxSpawnCount)
+                   if (_spawnCount < _maxSpawnCount && _canSpawn)
                    {
                     Instantiate(_fishPrefab, new Vector3(Random.Range(-10f, -8f), 1.05f, Random.Range(-10f, -8f)), Quaternion.AngleAxis(90f, Vector3.left));
                     _spawnCount++;
@@ -53,6 +53,9 @@ public class SpawnManager : MonoBehaviour
         _spawnCount--;
     }
 
-
+    public void ChangeSpawnState()
+    {
+        _canSpawn = !_canSpawn;
+    }
 
 }

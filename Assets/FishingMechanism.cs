@@ -9,6 +9,9 @@ public class FishingMechanism : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _fishText;
     [SerializeField] private int _collectedFish=0;
     [SerializeField] private SpawnManager _spawnManager;
+    [SerializeField] private int _maxFishStorage = 5;
+    [SerializeField] private bool _isFishing;
+    [SerializeField] private bool _isFishStorageFull = false;
 
     // Start is called before the first frame update
     void Start()
@@ -29,18 +32,30 @@ public class FishingMechanism : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (_collectedFish < _maxFishStorage)
+        {
+            _isFishStorageFull=false;
+        }
+        else
+        {
+            _isFishStorageFull=true;
+        }
     }
+
+    
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "fish")
+        if (_isFishStorageFull == false)
         {
-            _collectedFish++;
-            _fishText.text = "Fish : " + _collectedFish.ToString();
-            Destroy(other.gameObject, 0.0f);
-            _spawnManager.FishCollected();
+            if (other.tag == "fish")
+            {
+                _collectedFish++;
+                _fishText.text = "Fish : " + _collectedFish.ToString() + '/' + _maxFishStorage.ToString();
+                Destroy(other.gameObject, 0.0f);
+                _spawnManager.FishCollected();
 
+            }
         }
     }
 
