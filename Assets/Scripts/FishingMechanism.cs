@@ -12,6 +12,8 @@ public class FishingMechanism : MonoBehaviour
     [SerializeField] private int _maxFishStorage = 5;
     [SerializeField] private bool _isFishing;
     [SerializeField] private bool _isFishStorageFull = false;
+    [SerializeField] private UIManager _UIManager;
+    [SerializeField] private CoinManager _CoinManager;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +29,15 @@ public class FishingMechanism : MonoBehaviour
         {
             Debug.LogError("Fish Text UI NULL");
         }
+
+        if (_UIManager == null )
+        {
+            Debug.LogError("UIManager NULL");
+        }
+        if (_CoinManager == null)
+        {
+            Debug.LogError("CoinManager NULL");
+        }
     }
 
     // Update is called once per frame
@@ -40,9 +51,22 @@ public class FishingMechanism : MonoBehaviour
         {
             _isFishStorageFull=true;
         }
+        if(_collectedFish > 0)
+        {
+            _CoinManager.ChangeCanSell(true);
+        }
+        else
+        {
+            _CoinManager.ChangeCanSell(false);
+        }
+
     }
 
-    
+    public void SellFish()
+    {
+            _collectedFish--;
+            _UIManager.AddFishCount(_collectedFish, _maxFishStorage);       
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -51,7 +75,7 @@ public class FishingMechanism : MonoBehaviour
             if (other.tag == "fish")
             {
                 _collectedFish++;
-                _fishText.text = "Fish : " + _collectedFish.ToString() + '/' + _maxFishStorage.ToString();
+                _UIManager.AddFishCount(_collectedFish, _maxFishStorage);
                 Destroy(other.gameObject, 0.0f);
                 _spawnManager.FishCollected();
 
