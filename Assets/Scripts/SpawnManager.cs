@@ -38,7 +38,7 @@ public class SpawnManager : MonoBehaviour
            yield return new WaitForSeconds(3.0f);
            if (_spawnCount < _maxSpawnCount)
            {
-             Instantiate(_fishPrefab, new Vector3(Random.Range(-10f, -8f), 1.05f, Random.Range(-10f, -8f)), Quaternion.AngleAxis(90f, Vector3.left));
+             Instantiate(_fishPrefab, new Vector3(Random.Range(-10f, -8f), 1.05f, Random.Range(-10f, -8f)), (Quaternion.AngleAxis(90f, Vector3.left)));
                 _spawnCount += 1;
            }
 
