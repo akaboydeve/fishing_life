@@ -45,11 +45,11 @@ public class FishingMechanism : MonoBehaviour
     {
         if (_collectedFish < _maxFishStorage)
         {
-            _isFishStorageFull=false;
+            _isFishStorageFull = false;
         }
         else
         {
-            _isFishStorageFull=true;
+            _isFishStorageFull = true;
         }
         if(_collectedFish > 0)
         {
